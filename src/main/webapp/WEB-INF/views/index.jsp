@@ -18,8 +18,14 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+  <%-- Get the value of the "id" parameter --%>
+    <%
+    String loggedinuser = request.getParameter("loggedinuser");
+    %>
+    
 	<div class="container">
-		<h1>Student Data</h1>
+	<h1>Hello <%= loggedinuser %></h1>
+		<h3>Student Data</h3>
 		<table class="table">
 			<thead>
 				<tr>
@@ -51,6 +57,7 @@
 		</table>
 		<div class="container text-center">
 			<a href="add-student" class="btn btn-outline-success">Add Student</a>
+			<a href="${pageContext.request.contextPath }/" class="btn btn-outline-danger">Logout</a>
 		</div>
 	</div>
 	<!-- Bootstrap JavaScript -->
