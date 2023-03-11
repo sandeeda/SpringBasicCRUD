@@ -65,6 +65,7 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>crud.model.Student</value>
+				<value>crud.model.Admin</value>
 			</list>
 		</property>
 
