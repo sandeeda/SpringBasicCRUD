@@ -41,6 +41,9 @@
 								<a href="delete-student/${student.studentId}" class="btn btn-danger">
 									<i class="fas fa-trash"></i>
 								</a>
+								<a href="update-student/${student.studentId}" class="btn btn-success">
+									<i class="fas fa-pen-nib"></i>
+								</a>
 						</td>
 					</tr>
 				</c:forEach>

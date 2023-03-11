@@ -53,4 +53,11 @@ public class MainController {
 		redirectView.setUrl(request.getContextPath()+"/");
 		return redirectView;
 	}
+	
+	@RequestMapping("/update-student/{studentId}")
+	public String updateForm(@PathVariable("studentId") int studentId, Model model) {
+		Student student = this.studentDao.getStudent(studentId);
+		model.addAttribute(student);
+		return "update_form";
+	}
 }

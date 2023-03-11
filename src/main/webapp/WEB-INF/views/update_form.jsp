@@ -26,24 +26,25 @@
 </head>
 <body>
 	<div class="container">
-		<h1 class="text-center mb-5 text-white">Student Form</h1>
-		<form action="handle-student" method="post">
+		<h1 class="text-center mb-5 text-white">Update student details</h1>
+		<form action="${pageContext.request.contextPath }/handle-student" method="post">
+			<input type="hidden" value = "${student.studentId }" name="studentId"></input>
 			<div class="form-group">
 				<label for="firstName" class="text-white">First Name</label> <input
 					type="text" class="form-control" id="firstName" name = "firstName"
-					placeholder="Enter first name">
+					placeholder="Enter first name" value="${student.firstName }">
 			</div>
 			<div class="form-group">
 				<label for="lastName" class="text-white">Last Name</label> <input
 					type="text" class="form-control" id="lastName" name="lastName"
-					placeholder="Enter last name">
+					placeholder="Enter last name" value="${student.lastName }">
 			</div>
 			<div class="form-group">
 				<label for="course" class="text-white">Course</label> <input
 					type="text" class="form-control" id="course" name="course"
-					placeholder="Enter course name">
+					placeholder="Enter course name"  value="${student.course }">
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" class="btn btn-primary">Update</button>
 			<a href="${pageContext.request.contextPath }/" class="btn btn-danger">Back</a>
 			
 		</form>
