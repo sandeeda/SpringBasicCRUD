@@ -38,10 +38,10 @@
 		<property name="password" value="" />
 
 	</bean>
+<!-- 
 
 
-
-	<!-- LocalSessionFactoryBean -->
+	LocalSessionFactoryBean
 
 
 
@@ -49,10 +49,10 @@
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
 		name="factory">
 
-		<!-- data source -->
+		data source
 		<property name="dataSource" ref="ds"></property>
 
-		<!-- hibernate properties -->
+		hibernate properties
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
@@ -61,7 +61,7 @@
 			</props>
 		</property>
 
-		<!-- annotated classes -->
+		annotated classes
 		<property name="annotatedClasses">
 			<list>
 				<value>crud.model.Student</value>
@@ -80,7 +80,7 @@
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager"
 		name="transactionManager">
 		<property name="sessionFactory" ref="factory"></property>
-	</bean>
+	</bean> -->
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
