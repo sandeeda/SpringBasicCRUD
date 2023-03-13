@@ -2,38 +2,33 @@ package crud.controller;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.RedirectView;
 
 import crud.dao.AdminDao;
-import crud.dao.StudentDao;
+import crud.dao.ReservationDao;
 import crud.model.Admin;
-import crud.model.Student;
+import crud.model.Reservation;
 
 @Controller
 public class MainController {
 
 	@Autowired
-	private StudentDao studentDao;
+	private AdminDao adminDao;
 
 	@Autowired
-	private AdminDao adminDao;
+	private ReservationDao reservationDao;
 
 	@RequestMapping("/")
 	public String home(Model m) {
-		List<Student> students = studentDao.getStudents();
-		m.addAttribute("students", students);
 		return "login";
 	}
 
@@ -55,16 +50,17 @@ public class MainController {
 
 		}
 		if (approved) {
-			//List<Student> students = studentDao.getStudents();
-			//m.addAttribute("students", students);
+			// List<Student> students = studentDao.getStudents();
+			// m.addAttribute("students", students);
 			m.addAttribute("loggedinuser", admin.getUsername());
 			RedirectView redirectView = new RedirectView();
-			redirectView.setUrl(request.getContextPath() + "/list");
+			redirectView.setUrl(request.getContextPath() + "/reservation");
 			return redirectView;
 		} else {
 			RedirectView redirectView = new RedirectView();
 			redirectView.setUrl(request.getContextPath() + "/loginfailed");
-			return redirectView;		}
+			return redirectView;
+		}
 
 	}
 
@@ -72,45 +68,35 @@ public class MainController {
 	public String showLoginFailed(Model m) {
 		return "error";
 	}
+
+	@RequestMapping("/reservation")
+	public String showReservationForm(Model m) {
+		return "reservation";
+	}
+
+	// handle reservation form
+	@RequestMapping(value = "/handle-reservation", method = RequestMethod.POST)
+	public RedirectView handleReservation(@ModelAttribute Reservation reservation, HttpServletRequest request,
+			Model m) {
+		System.out.println(reservation);
+		this.reservationDao.createReservation(reservation);
+		RedirectView redirectView = new RedirectView();
+		redirectView.setUrl(request.getContextPath() + "/listofreservations");
+		return redirectView;
+	}
+
+	@RequestMapping("/listofreservations")
+	public String showReservations(Model m) {
+		List<Reservation> reservations = reservationDao.getReservation();
+		m.addAttribute("reservations", reservations);
+		return "indexOfReservations";
+	}
 	
-	@RequestMapping("/list")
-	public String showStudents(Model m) {
-		List<Student> students = studentDao.getStudents();
-		m.addAttribute("students", students);
-		return "index";
+	// add reservation form
+	@RequestMapping("/add-reservation")
+	public String addReservation(Model m) {
+		return "reservation";
 	}
 
-	// add student form
-	@RequestMapping("/add-student")
-	public String addStudent(Model m) {
-		return "add_student_form";
-	}
-
-	// handle add student form
-	@RequestMapping(value = "/handle-student", method = RequestMethod.POST)
-	public RedirectView handleStudent(@ModelAttribute Student student, HttpServletRequest request, Model m) {
-		System.out.println(student);
-		studentDao.createStudent(student);
-		request.setAttribute("loggedinuser", m.getAttribute("loggedinuser"));
-		RedirectView redirectView = new RedirectView();
-		redirectView.setUrl(request.getContextPath() + "/list");
-		return redirectView;
-	}
-
-	// Delete Handler
-	@RequestMapping("/delete-student/{studentId}")
-	public RedirectView deleteStudent(@PathVariable("studentId") int studentId, HttpServletRequest request, Model m) {
-		this.studentDao.deleteStudent(studentId);
-		request.setAttribute("loggedinuser", m.getAttribute("loggedinuser"));
-		RedirectView redirectView = new RedirectView();
-		redirectView.setUrl(request.getContextPath() + "/list");
-		return redirectView;
-	}
-
-	@RequestMapping("/update-student/{studentId}")
-	public String updateForm(@PathVariable("studentId") int studentId, Model model) {
-		Student student = this.studentDao.getStudent(studentId);
-		model.addAttribute(student);
-		return "update_form";
-	}
+	
 }
