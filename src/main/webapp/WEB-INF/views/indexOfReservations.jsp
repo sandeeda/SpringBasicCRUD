@@ -45,7 +45,7 @@
 		</table>
 		<div class="container text-center">
 			<a href="add-reservation" class="btn btn-outline-success">Add More</a>
-			<a href="${pageContext.request.contextPath }/" class="btn btn-outline-danger">Logout</a>
+			<a href="${pageContext.request.contextPath}" class="btn btn-outline-danger">Logout</a>
 		</div>
 	</div>
 </body>
